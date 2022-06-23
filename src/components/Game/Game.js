@@ -16,7 +16,9 @@ function Game() {
     [0, 0, 0, 0],
     [0, 0, 0, 0],
   ]);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(
+    !window.localStorage.getItem("instructions")
+  );
 
   const [gameOver, setGameOver] = useState(false);
 
@@ -257,7 +259,6 @@ function Game() {
 
     return true;
   };
-  // Reset
   const resetGame = () => {
     setGameOver(false);
     const emptyGrid = [
@@ -307,6 +308,10 @@ function Game() {
     initialize();
   }, []);
 
+  useEffect(() => {
+    window.localStorage.setItem("instructions", true);
+  }, []);
+
   useEvent("keydown", handleKeyDown);
 
   return (
@@ -314,9 +319,14 @@ function Game() {
       {showModal && <Instructioins close={() => setShowModal(false)} />}
       <div
         style={{
-          width: 445,
+          width: "45%",
           margin: "auto",
-          marginTop: 30,
+          backgroundColor: "#fff9e1",
+          minHeight: "100vh",
+          padding: "5vh 3vh",
+          display: "flex",
+          alignContent: "center",
+          flexDirection: "column",
         }}
       >
         <div className="grid grid-cols-4 gap-4">
@@ -332,18 +342,36 @@ function Game() {
               2048
             </p>
           </div>
-          <div className="col-span-1">
-            <p>Score</p>
-            <p>0</p>
+          <div
+            className="col-span-1"
+            style={{
+              backgroundColor: "#b4764f",
+              height: "60%",
+              overflow: "hidden",
+              textAlign: "center",
+              borderRadius: "10px",
+            }}
+          >
+            <p style={{ color: "#e3d7bf", fontSize: "20px" }}>Best</p>
+            <p style={{ color: "white", fontSize: "20px" }}>880</p>
           </div>
-          <div className="col-span-1">
-            <p>Score</p>
-            <p>0</p>
+          <div
+            className="col-span-1"
+            style={{
+              backgroundColor: "#b4764f",
+              height: "60%",
+              overflow: "hidden",
+              textAlign: "center",
+              borderRadius: "10px",
+            }}
+          >
+            <p style={{ color: "#e3d7bf", fontSize: "20px" }}>Score</p>
+            <p style={{ color: "white", fontSize: "20px" }}>0</p>
           </div>
         </div>
         <div className="grid grid-cols-4 gap-4">
           <div className="col-span-2">
-            <p>
+            <p style={{ color: "#776e65" }}>
               Join the titles, get to <strong>2048!</strong>
             </p>
             <p
